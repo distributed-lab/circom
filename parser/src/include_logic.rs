@@ -22,6 +22,22 @@ impl FileStack {
         name: String,
         libraries: &Vec<PathBuf>,
     ) -> Result<String, Report> {
+        if name.starts_with("@") {
+            let mut cwd: PathBuf = f_stack.current_location.clone();
+            let name = name.strip_prefix("@").unwrap();
+            while cwd.pop() {
+                let mut path = PathBuf::new();
+                path.push(cwd.clone());
+                path.push(name);
+                let path = normalize_path(&path);
+                if path.is_file() {
+                    if !f_stack.black_paths.contains(&path) {
+                        f_stack.stack.push(path.clone());
+                    }
+                    return Result::Ok(path.to_str().unwrap().to_string());
+                }
+            }
+        }
         let mut libraries2 = Vec::new();
         libraries2.push(f_stack.current_location.clone());
         libraries2.append(&mut libraries.clone());
