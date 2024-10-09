@@ -50,7 +50,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: 'v2.0.2'
+          ref: 'v2.0.3'
           fetch-depth: '0'
       - name: Build binary
         uses: houseabsolute/actions-rust-cross@v0
@@ -75,8 +75,8 @@ jobs:
       - name: Release binary and SHA-256 checksum to GitHub
         uses: softprops/action-gh-release@v2
         with:
-          name: 'v2.0.2'
-          tag_name: 'v2.0.2'
+          name: 'v2.0.3'
+          tag_name: 'v2.0.3'
           files: |
             target/${{ matrix.platform.target }}/release/${{ matrix.platform.bin }}
             target/${{ matrix.platform.target }}/release/${{ matrix.platform.bin }}.sha256
