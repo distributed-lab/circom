@@ -270,9 +270,9 @@ pub fn generate_hash_map(signal_name_list: &Vec<InputInfo>, size: usize) -> Vec<
 pub fn generate_data_from_hash_map(map: &Vec<(u64, usize, usize)>) -> String {
     let mut hash_map_data = "".to_string();
     for (h, p, s) in map {
-        hash_map_data.push_str(&wasm_hexa(8, &BigInt::from(*h))); //64bits 8 stots of 8bits
-        hash_map_data.push_str(&wasm_hexa(4, &BigInt::from(*p))); //32bits 4 stots of 8bits
-        hash_map_data.push_str(&wasm_hexa(4, &BigInt::from(*s))); //32bits 4 stots of 8bits
+        hash_map_data.push_str(&wasm_hexa(8, &BigInt::from(*h))); //64bits 8 slots of 8bits
+        hash_map_data.push_str(&wasm_hexa(4, &BigInt::from(*p))); //32bits 4 slots of 8bits
+        hash_map_data.push_str(&wasm_hexa(4, &BigInt::from(*s))); //32bits 4 slots of 8bits
     }
     hash_map_data
 }
@@ -280,7 +280,7 @@ pub fn generate_data_from_hash_map(map: &Vec<(u64, usize, usize)>) -> String {
 pub fn generate_data_witness_to_signal_list(signal_list: &Vec<usize>) -> String {
     let mut signallist_data = "".to_string();
     for s in signal_list {
-        signallist_data.push_str(&wasm_hexa(4, &BigInt::from(*s))); //32bits 4 stots of 8bits
+        signallist_data.push_str(&wasm_hexa(4, &BigInt::from(*s))); //32bits 4 slots of 8bits
     }
     signallist_data
 }
@@ -628,10 +628,6 @@ pub fn generate_imports_list() -> Vec<WasmInstruction> {
     );
     imports.push(
         "(import \"runtime\" \"showSharedRWMemory\" (func $showSharedRWMemory (type $_t_void)))"
-            .to_string(),
-    );
-    imports.push(
-        "(import \"runtime\" \"printDebug\" (func $printDebug (type $_t_i32)))"
             .to_string(),
     );
     imports
@@ -1722,6 +1718,7 @@ pub fn fr_types(prime: &String) -> Vec<WasmInstruction> {
         "pallas" => include_str!("pallas/fr-types.wat"),
         "vesta" => include_str!("vesta/fr-types.wat"),
         "secq256r1" => include_str!("secq256r1/fr-types.wat"),
+        "bls12377" => include_str!("bls12377/fr-types.wat"),
         _ => unreachable!(),
     };    
     for line in file.lines() {
@@ -1740,6 +1737,7 @@ pub fn fr_data(prime: &String) -> Vec<WasmInstruction> {
         "pallas" => include_str!("pallas/fr-data.wat"),
         "vesta" => include_str!("vesta/fr-data.wat"),
         "secq256r1" => include_str!("secq256r1/fr-data.wat"),
+        "bls12377" => include_str!("bls12377/fr-data.wat"),
         _ => unreachable!(),
     };    
     for line in file.lines() {
@@ -1757,6 +1755,7 @@ pub fn fr_code(prime: &String) -> Vec<WasmInstruction> {
         "pallas" => include_str!("pallas/fr-code.wat"),
         "vesta" => include_str!("vesta/fr-code.wat"),
         "secq256r1" => include_str!("secq256r1/fr-code.wat"),
+        "bls12377" => include_str!("bls12377/fr-code.wat"),
         _ => unreachable!(),
     };    
     for line in file.lines() {

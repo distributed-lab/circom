@@ -18,9 +18,6 @@ module.exports = async function builder(code, options) {
     
     const instance = await WebAssembly.instantiate(wasmModule, {
         runtime: {
-	    printDebug : function(value) {
-                console.log("printDebug:",value);
-	    },
             exceptionHandler : function(code) {
 		let err;
                 if (code == 1) {
@@ -299,7 +296,7 @@ function qualify_input(prefix,input,input1) {
 	    let t = typeof a[0];
 	    for (let i = 1; i<a.length; i++) {
 		if (typeof a[i] != t){
-		    throw new Error(`Types are not the same in the the key ${prefix}`);
+		    throw new Error(`Types are not the same in the key ${prefix}`);
 		}
 	    }
 	    if (t == "object") {
